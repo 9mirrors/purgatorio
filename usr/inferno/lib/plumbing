@@ -41,10 +41,8 @@ plumb start /dis/wm/brutus.dis $file$2
 
 # existing files, possibly tagged by line number, go to wm/brutus
 kind is text
-data matches '([.a-zA-Z0-9_/\-]+[a-zA-Z0-9_/\-])(:([0-9]+))?'
+data matches '([.a-zA-Z0-9_/\-]+[a-zA-Z0-9_/\-])(:[0-9]+)?'
 data isfile     $1
-data set $1
-attr set addr=$3
 plumb to edit
 plumb start /dis/wm/brutus.dis $file$2
 

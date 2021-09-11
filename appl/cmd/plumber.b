@@ -521,14 +521,7 @@ matchpattern(in: ref Inmesg, p: ref Pattern): int
 	"dst" =>	text = msg.dst;
 	"dir" =>	text = msg.dir;
 	"kind" =>	text = msg.kind;
-	"attr" =>	
-		# this is a hack, 9front provides an add verb
-		# better yet, replace the plumbing rules with a sh script
-		al := plumbmsg->string2attrs(text);
-		for(l := al; l!= nil; l = tl l){
-			in.attrs = hd l :: in.attrs;
-		}
-		msg.attr = plumbmsg->attrs2string(in.attrs);
+	"attr" =>	text = msg.attr;
 	"data" =>	text = in.text;
 	* =>
 		sys->fprint(stderr, "plumb: don't recognize pattern field %s\n", p.field);
