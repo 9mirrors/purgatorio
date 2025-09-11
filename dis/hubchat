@@ -2,6 +2,7 @@
 # Connect to public grid chat
 load std
 
+mount -A -P tcp!chat.only9fans.com!9990 /n/chat
 cat /n/chat/chat &
 echo JOIN $user from Purgatorio! >>/n/chat/chat
 # echo -n '> ' >[1=2]
