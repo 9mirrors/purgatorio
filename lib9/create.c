@@ -23,7 +23,12 @@ create(char *f, int mode, int perm)
 	m |= O_CREAT|O_TRUNC;
 
 	if(perm & DMDIR){
+		#ifndef _WIN32_WINNT
 		if(mkdir(f, perm&0777) < 0)
+		#endif
+		#ifdef _WIN32_WINNT
+		if(mkdir(f) < 0)
+		#endif
 			return -1;
 		perm &= ~DMDIR;
 		m &= 3;
