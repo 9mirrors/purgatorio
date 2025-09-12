@@ -109,6 +109,7 @@ qsorts(char *a, long n, Sort *p)
 	}
 }
 
+#ifndef PLAN9
 void
 qsort(void *va, long n, long es, int (*cmp)(void*, void*))
 {
@@ -121,3 +122,4 @@ qsort(void *va, long n, long es, int (*cmp)(void*, void*))
 		s.swap = swapb;
 	qsorts((char*)va, n, &s);
 }
+#endif

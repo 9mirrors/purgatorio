@@ -33,7 +33,9 @@ enum
 
 #define	NHASH		(1<<5)
 #define	HASHMASK	(NHASH-1)
+#ifndef PLAN9
 #define	IOUNIT	(64*1024)
+#endif
 
 typedef struct Client Client;
 typedef struct Draw Draw;

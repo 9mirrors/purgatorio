@@ -20,7 +20,9 @@ Dir*		chandirstat(Chan*);
 void		cinit(void);
 char*	clipread(void);
 int		clipwrite(char*);
+#ifndef PLAN9
 void	(*coherence)(void);
+#endif
 void		copen(Chan*);
 void		cmderror(Cmdbuf*, char*);
 Block*	concatblock(Block*);

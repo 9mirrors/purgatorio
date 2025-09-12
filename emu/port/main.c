@@ -239,8 +239,10 @@ main(int argc, char *argv[])
 	char *enva[20];
 	int envc;
 
+	#ifndef PLAN9
 	if(coherence == nil)
 		coherence = nofence;
+	#endif
 	quotefmtinstall();
 	savestartup(argc, argv);
 	/* set default root now, so either $EMU or -r can override it later */
@@ -434,6 +436,7 @@ _assert(char *fmt)
 /*
  * mainly for libmp
  */
+#ifndef PLAN9
 void
 sysfatal(char *fmt, ...)
 {
@@ -445,6 +448,7 @@ sysfatal(char *fmt, ...)
 	va_end(arg);
 	error(buf);
 }
+#endif
 
 void
 oserror(void)
