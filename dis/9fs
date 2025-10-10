@@ -1,0 +1,30 @@
+#!/dis/sh -n
+load std
+
+if {no $*} {
+	echo Usage: 9fs service ... >[1=2]
+	raise 'usage'
+}
+
+for s in $* {
+	if{~ hubchat $s}{
+		mount -A -P tcp!chat.only9fans.com!9990 /n/chat
+	}{~ gridchat $s}{
+		mount -A -P tcp!chat.only9fans.com!9990 /n/chat
+	}{~ 9pio $s}{
+		mount -A -P tcp!9p.io!9fs /n/9pio
+	}{~ postnix $s}{
+		mount -A -P tcp!postnix.pw!9fs /n/postnix
+	}{~ 9front $s}{
+		mount -A -P tcp!9front.org!9000 /n/9front
+		mount -A -P tcp!plan9.stanleylieber.com!9000 /n/9front
+	}{~ 9contrib $s}{
+		mount -A -P tcp!contrib.9front.org!9fs /n/contrib
+	}{~ lists $s}{
+		mount -A -P tcp!9front.org!7734 /n/lists
+	}{~ wiki $s}{
+		mount -A -P tcp!9p.io!wiki /n/wiki
+	}{
+		mount -A -P tcp!$s!9fs /n/$s
+	}
+}
