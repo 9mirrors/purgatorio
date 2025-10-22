@@ -2,6 +2,7 @@
 #include "isa.h"
 #include "interp.h"
 #include "raise.h"
+#include "xalloc.h"
 
 #define DOT			((ulong)code)
 
@@ -1520,7 +1521,7 @@ preamble(void)
 	if(comvec)
 		return;
 
-	comvec = malloc(32);
+	comvec = xalloc(32);
 	if(comvec == nil)
 		error(exNomem);
 	code = (uchar*)comvec;
@@ -1536,6 +1537,7 @@ preamble(void)
 	modrm(Ojmprm, O(REG, PC), RTMP, 4);
 
 	segflush(comvec, 32);
+	xactivate(comvec);
 }
 
 static void
@@ -1855,7 +1857,7 @@ typecom(Type *t)
 	n += code - tmp;
 	free(tmp);
 
-	code = mallocz(n, 0);
+	code = xallocz(n);
 	if(code == nil)
 		return;
 
@@ -1869,6 +1871,7 @@ typecom(Type *t)
 			(ulong)t, t->size, (ulong)t->initialize, (ulong)t->destroy, n);
 
 	segflush(t->initialize, n);
+	xactivate(t->initialize);
 }
 
 static void
@@ -1929,7 +1932,7 @@ compile(Module *m, int size, Modlink *ml)
 	n = (n+3)&~3;
 
 	nlit *= sizeof(ulong);
-	base = mallocz(n + nlit, 0);
+	base = xallocz(n + nlit);
 	if(base == nil)
 		goto bad;
 
@@ -1980,6 +1983,7 @@ compile(Module *m, int size, Modlink *ml)
 	m->prog = (Inst*)base;
 	m->compiled = 1;
 	segflush(base, n*sizeof(base));
+	xactivate(base);
 	return 1;
 bad:
 	free(patch);

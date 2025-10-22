@@ -3,6 +3,7 @@
 #include "interp.h"
 #include "pool.h"
 #include "raise.h"
+#include "xalloc.h"
 
 void	freearray(Heap*, int);
 void	freelist(Heap*, int);
@@ -277,7 +278,7 @@ freetype(Type *t)
 	if(t == nil || --t->ref > 0)
 		return;
 
-	free(t->initialize);
+	xfree(t->initialize);
 	free(t);
 }
 

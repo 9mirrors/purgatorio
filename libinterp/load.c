@@ -2,6 +2,7 @@
 #include "isa.h"
 #include "interp.h"
 #include "raise.h"
+#include "xalloc.h"
 #include <kernel.h>
 
 #define	A(r)	*((Array**)(r))
@@ -568,7 +569,7 @@ freemod(Module *m)
 		free(m->type);
 	}
 	free(m->name);
-	free(m->prog);
+	xfree(m->prog);
 	free(m->path);
 	free(m->pctab);
 	if(m->ldt != nil){
