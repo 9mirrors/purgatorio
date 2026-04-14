@@ -14,6 +14,8 @@ ASFLAGS=
 CC=		cc -c -m32
 CFLAGS=		-g\
 		-O0\
+		-Wno-implicit-function-declaration \
+		-Wno-incompatible-pointer-types\
 		-fno-strict-aliasing\
 		-fno-aggressive-loop-optimizations\
 		-Wuninitialized -Wunused-variable -Wreturn-type -Wimplicit\
@@ -25,7 +27,7 @@ CFLAGS=		-g\
 
 ANSICPP=
 LD=		cc -m32
-LDFLAGS=
+LDFLAGS= -Wl,--unresolved-symbols=ignore-all
 
 SYSLIBS=
 
